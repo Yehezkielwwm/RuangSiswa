@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5f6f2" />
+  <meta name="description" content="RuangSiswa — dashboard belajar yang bisa digunakan di desktop dan mobile." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <title>RuangSiswa — Student Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="RuangSiswa beranda">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span>ruang<span class="brand-light">siswa</span></span>
+      </a>
+
+      <div class="side-label">MENU UTAMA</div>
+      <nav class="main-nav" aria-label="Navigasi utama">
+        <button class="nav-item active" data-view="overview"><span class="nav-icon">▦</span> Ringkasan</button>
+        <button class="nav-item" data-view="calendar"><span class="nav-icon">▦</span> Kalender</button>
+        <button class="nav-item" data-view="schedule"><span class="nav-icon">▤</span> Jadwal</button>
+        <button class="nav-item" data-view="tasks"><span class="nav-icon">✓</span> Daftar tugas <span class="nav-count" id="taskNavCount">0</span></button>
+        <button class="nav-item" data-view="reminders"><span class="nav-icon">◷</span> Pengingat</button>
+      </nav>
+
+      <div class="side-label side-label-spaced">PERSONAL</div>
+      <nav class="main-nav">
+        <button class="nav-item" data-view="notes"><span class="nav-icon">▧</span> Catatan belajar</button>
+        <button class="nav-item" data-view="settings"><span class="nav-icon">⚙</span> Kustomisasi</button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="quote-card">
+          <div class="quote-spark">✳</div>
+          <p id="dailyVerseText">Tuhan memberi kekuatan untuk menjalani hari ini.</p>
+          <strong id="dailyVerseRef" class="verse-reference">Yesaya 40:31</strong>
+          <span>AYAT ALKITAB HARI INI</span>
+        </div>
+        <div class="profile">
+          <div class="avatar">S</div>
+          <div class="profile-copy"><strong>Siswa</strong><span>Pelajar aktif</span></div>
+          <button class="more-btn" title="Menu profil" aria-label="Menu profil">···</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Buka menu">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <strong id="crumbTitle">Ringkasan</strong></div>
+        <div class="top-actions">
+          <div class="date-chip"><span class="calendar-mini">▦</span><span id="todayDate"></span></div>
+          <button class="install-button" id="installAppBtn" hidden>Pasang aplikasi</button>
+          <button class="icon-button" id="quickAddBtn" aria-label="Tambah tugas" title="Tambah tugas">＋</button>
+        </div>
+      </header>
+
+      <section class="page-view active" id="overviewView">
+        <div class="welcome-row">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-dot"></span> DASHBOARD PELAJAR</div>
+            <h1>Selamat datang,<br><span id="greetingName">pejuang belajar.</span></h1>
+            <p class="subheading" id="welcomeMessage">Atur harimu, selesaikan satu hal dalam satu waktu.</p>
+          </div>
+          <div class="date-illustration" aria-hidden="true">
+            <div class="sun"></div><div class="cloud cloud-one"></div><div class="cloud cloud-two"></div>
+            <span class="illus-note">MAKE TODAY COUNT</span>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card stat-dark">
+            <div class="stat-top"><span>Progress tugas</span><span class="stat-symbol">↗</span></div>
+            <div class="stat-value"><strong id="progressPercent">0%</strong><span id="progressFraction">0 dari 0 selesai</span></div>
+            <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="stat-foot">Kamu sedang membangun konsistensi.</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Agenda hari ini</span><span class="stat-icon icon-lilac">▤</span></div>
+            <div class="stat-value"><strong id="todayScheduleCount">0</strong><span>kegiatan terjadwal</span></div>
+            <div class="stat-foot"><span class="tiny-dot purple"></span> Cek jadwal agar tidak terburu-buru.</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Tugas mendatang</span><span class="stat-icon icon-peach">◷</span></div>
+            <div class="stat-value"><strong id="upcomingCount">0</strong><span>belum diselesaikan</span></div>
+            <div class="stat-foot"><span class="tiny-dot orange"></span> Prioritaskan yang paling dekat.</div>
+          </article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel schedule-panel">
+            <div class="panel-heading">
+              <div><div class="eyebrow">HARI INI</div><h2>Jadwal pelajaran</h2></div>
+              <button class="text-link" data-go="schedule">Lihat semua <span>↗</span></button>
+            </div>
+            <div class="today-label" id="scheduleDayLabel">Agenda sekolahmu</div>
+            <div class="timeline" id="todayTimeline"></div>
+          </section>
+
+          <section class="panel tasks-panel">
+            <div class="panel-heading">
+              <div><div class="eyebrow">JANGAN TERLEWAT</div><h2>Prioritas tugas</h2></div>
+              <button class="text-link" data-go="tasks">Semua tugas <span>↗</span></button>
+            </div>
+            <div id="priorityTasks" class="priority-list"></div>
+            <button class="add-inline" id="addTaskInline"><span>＋</span> Tambah tugas baru</button>
+          </section>
+        </div>
+
+        <div class="bottom-grid">
+          <section class="panel reminder-panel">
+            <div class="panel-heading">
+              <div><div class="eyebrow">CATATAN KECIL</div><h2>Pengingat hari ini</h2></div>
+              <button class="round-plus" id="addReminderBtn" aria-label="Tambah pengingat">＋</button>
+            </div>
+            <div id="reminderPreview" class="reminder-preview"></div>
+          </section>
+          <section class="focus-card">
+            <div class="focus-top"><span class="focus-tag">✳ MINI CHALLENGE</span><span class="focus-number">01 / 01</span></div>
+            <div class="focus-content"><div class="focus-icon">✎</div><h2>Mulai dari 25 menit.</h2><p>Pilih satu tugas, jauhkan distraksi, lalu fokus sampai timer selesai.</p></div>
+            <div class="timer-row"><div><strong id="timerDisplay">25:00</strong><span>FOCUS SESSION</span></div><button id="timerButton" class="timer-button">Mulai fokus <span>→</span></button></div>
+          </section>
+        </div>
+        <footer class="footer-note">Dibuat untuk hari-hari yang lebih teratur <span>✳</span></footer>
+      </section>
+
+      <section class="page-view" id="calendarView">
+        <div class="page-heading"><div><div class="eyebrow">RENCANAKAN HARI-HARIMU</div><h1>Kalender</h1><p class="subheading">Lihat tugas, jadwal, dan pengingat berdasarkan tanggal.</p></div><button class="primary-button" id="calendarAddBtn">＋ Tambah agenda</button></div>
+        <div class="calendar-layout">
+          <section class="panel calendar-panel">
+            <div class="calendar-toolbar"><button class="calendar-arrow" id="calendarPrev" aria-label="Bulan sebelumnya">‹</button><h2 id="calendarMonthLabel"></h2><button class="calendar-arrow" id="calendarNext" aria-label="Bulan berikutnya">›</button><button class="calendar-today" id="calendarToday">Hari ini</button></div>
+            <div class="calendar-weekdays"><span>Min</span><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span></div>
+            <div class="calendar-days" id="calendarDays"></div>
+            <div class="calendar-legend"><span><i class="legend-dot task-dot"></i>Tugas</span><span><i class="legend-dot reminder-dot"></i>Pengingat</span><span><i class="legend-dot schedule-dot"></i>Jadwal</span></div>
+          </section>
+          <section class="panel calendar-agenda"><div class="eyebrow">AGENDA TERPILIH</div><h2 id="calendarSelectedLabel"></h2><div id="calendarAgendaList"></div></section>
+        </div>
+      </section>
+
+      <section class="page-view" id="scheduleView">
+        <div class="page-heading"><div><div class="eyebrow">ATUR WAKTUMU</div><h1>Jadwal mingguan</h1><p class="subheading">Lihat pelajaran dan kegiatanmu dalam satu tempat.</p></div><button class="primary-button" id="addScheduleBtn">＋ Tambah jadwal</button></div>
+        <div class="panel schedule-full-panel">
+          <div class="week-tabs" id="weekTabs"></div>
+          <div class="schedule-day-title"><div><span class="eyebrow">AGENDA HARIAN</span><h2 id="selectedDayTitle">Senin</h2></div><span class="day-total" id="dayTotal">0 kegiatan</span></div>
+          <div class="timeline full-timeline" id="fullTimeline"></div>
+        </div>
+      </section>
+
+      <section class="page-view" id="tasksView">
+        <div class="page-heading"><div><div class="eyebrow">TETAP TERARAH</div><h1>Daftar tugas</h1><p class="subheading">Keluarkan dari kepala, masukkan ke daftar. Satu per satu.</p></div><button class="primary-button" id="addTaskPage">＋ Tambah tugas</button></div>
+        <div class="task-toolbar panel"><div class="filter-tabs" id="taskFilters"><button class="filter-tab active" data-filter="all">Semua</button><button class="filter-tab" data-filter="active">Belum selesai</button><button class="filter-tab" data-filter="done">Selesai</button></div><span id="taskTotalLabel" class="muted-small"></span></div>
+        <div class="task-board" id="taskBoard"></div>
+      </section>
+
+      <section class="page-view" id="remindersView">
+        <div class="page-heading"><div><div class="eyebrow">JAGA HAL PENTING</div><h1>Pengingat</h1><p class="subheading">Hal kecil yang sering terlupa, sekarang punya tempat.</p></div><button class="primary-button" id="addReminderPage">＋ Buat pengingat</button></div>
+        <div class="reminder-grid" id="reminderGrid"></div>
+      </section>
+
+      <section class="page-view" id="settingsView">
+        <div class="page-heading"><div><div class="eyebrow">ATUR SESUAI CARA KERJAMU</div><h1>Kustomisasi</h1><p class="subheading">Ubah identitas, tampilan, dan isi dashboard sesuai kebutuhanmu.</p></div><button class="primary-button" id="saveSettingsBtn">Simpan perubahan</button></div>
+        <div class="settings-layout">
+          <section class="panel settings-panel">
+            <div class="settings-section-head"><div class="settings-icon">✎</div><div><h2>Identitas dashboard</h2><p>Dashboard ini akan menyapamu dengan nama pilihanmu.</p></div></div>
+            <div class="settings-fields">
+              <div class="form-field"><label for="customName">Nama panggilan</label><input id="customName" maxlength="28" placeholder="Contoh: Richie"></div>
+              <div class="form-field"><label for="customSubtitle">Kalimat sambutan</label><input id="customSubtitle" maxlength="90" placeholder="Contoh: Pelan-pelan, yang penting konsisten."></div>
+            </div>
+          </section>
+          <section class="panel settings-panel">
+            <div class="settings-section-head"><div class="settings-icon">◐</div><div><h2>Tampilan</h2><p>Pilih nuansa warna yang paling nyaman dilihat.</p></div></div>
+            <div class="theme-options">
+              <button class="theme-choice" data-theme="sage"><span class="theme-swatch sage-swatch"></span><strong>Sage</strong><small>Tenang & natural</small></button>
+              <button class="theme-choice" data-theme="ocean"><span class="theme-swatch ocean-swatch"></span><strong>Ocean</strong><small>Biru yang segar</small></button>
+              <button class="theme-choice" data-theme="lavender"><span class="theme-swatch lavender-swatch"></span><strong>Lavender</strong><small>Lembut & kalem</small></button>
+              <button class="theme-choice" data-theme="sunset"><span class="theme-swatch sunset-swatch"></span><strong>Terracotta</strong><small>Hangat & berani</small></button>
+            </div>
+            <div class="settings-fields settings-fields-two">
+              <div class="form-field"><label for="customAccent">Warna aksen sendiri</label><div class="color-input-wrap"><input type="color" id="customAccent" value="#426d54"><span id="customAccentLabel">#426D54</span></div></div>
+              <div class="form-field"><label for="fontScale">Ukuran teks</label><select id="fontScale"><option value="normal">Normal</option><option value="large">Lebih besar</option></select></div>
+            </div>
+          </section>
+          <section class="panel settings-panel">
+            <div class="settings-section-head"><div class="settings-icon">▦</div><div><h2>Bagian dashboard</h2><p>Pilih panel yang ingin ditampilkan di halaman ringkasan.</p></div></div>
+            <div class="toggle-list">
+              <label class="toggle-row"><span><strong>Jadwal pelajaran</strong><small>Agenda sekolah hari ini</small></span><input type="checkbox" class="setting-toggle" data-widget="schedule" checked></label>
+              <label class="toggle-row"><span><strong>Prioritas tugas</strong><small>Tugas yang perlu dikerjakan</small></span><input type="checkbox" class="setting-toggle" data-widget="tasks" checked></label>
+              <label class="toggle-row"><span><strong>Pengingat hari ini</strong><small>Catatan yang tidak boleh terlupa</small></span><input type="checkbox" class="setting-toggle" data-widget="reminders" checked></label>
+              <label class="toggle-row"><span><strong>Mini challenge</strong><small>Timer fokus 25 menit</small></span><input type="checkbox" class="setting-toggle" data-widget="focus" checked></label>
+            </div>
+          </section>
+          <section class="panel settings-panel settings-danger">
+            <div class="settings-section-head"><div class="settings-icon">↺</div><div><h2>Data dashboard</h2><p>Kembalikan pengaturan tampilan awal tanpa menghapus tugas dan jadwalmu.</p></div></div>
+            <button class="reset-button" id="resetSettingsBtn">Kembalikan pengaturan awal</button>
+          </section>
+        </div>
+      </section>
+
+      <section class="page-view" id="notesView">
+        <div class="page-heading"><div><div class="eyebrow">RUANG IDE</div><h1>Catatan belajar</h1><p class="subheading">Simpan rangkuman, rumus, atau hal yang ingin kamu ingat.</p></div><span class="saved-label">TERSIMPAN OTOMATIS</span></div>
+        <div class="panel notes-panel"><div class="notes-meta"><span class="note-dot"></span> CATATAN PRIBADI <span id="notesSaved">Belum ada perubahan</span></div><input id="noteTitle" class="note-title" placeholder="Judul catatan..." maxlength="70"><textarea id="noteBody" placeholder="Tulis ide, rangkuman materi, atau daftar hal yang perlu dipelajari..."></textarea><div class="notes-bottom"><span>Catatan tersimpan di browser perangkat ini.</span><button class="clear-note" id="clearNote">Bersihkan catatan</button></div></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head"><div><div class="eyebrow">RUANGSISWA</div><h2 id="modalTitle">Tambah tugas</h2></div><button class="modal-close" id="closeModal" aria-label="Tutup">×</button></div>
+      <form id="entryForm">
+        <input type="hidden" id="entryType" value="task">
+        <label for="entryTitle">Nama kegiatan / tugas</label><input id="entryTitle" required maxlength="90" placeholder="Contoh: Latihan soal matematika">
+        <div class="form-row" id="taskFields"><div class="form-field"><label for="entrySubject">Mata pelajaran</label><select id="entrySubject"><option>Matematika</option><option>Fisika</option><option>Kimia</option><option>Biologi</option><option>Bahasa Indonesia</option><option>Bahasa Inggris</option><option>Sejarah</option><option>Informatika</option><option>Lainnya</option></select></div><div class="form-field"><label for="entryDue">Batas waktu</label><input type="date" id="entryDue"></div></div>
+        <div class="form-row" id="scheduleFields" hidden><div class="form-field"><label for="entryDay">Hari</label><select id="entryDay"><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option></select></div><div class="form-field"><label for="entryTime">Waktu</label><input type="time" id="entryTime" value="07:00"></div></div>
+        <div class="form-row" id="reminderFields" hidden><div class="form-field"><label for="entryReminderDate">Tanggal</label><input type="date" id="entryReminderDate"></div><div class="form-field"><label for="entryReminderTime">Waktu (opsional)</label><input type="time" id="entryReminderTime"></div></div>
+        <div class="form-field"><label for="entryDescription">Catatan (opsional)</label><textarea id="entryDescription" class="small-textarea" rows="2" placeholder="Detail tambahan..."></textarea></div>
+        <div class="modal-actions"><button type="button" class="cancel-button" id="cancelModal">Batal</button><button type="submit" class="primary-button">Simpan</button></div>
+      </form>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>

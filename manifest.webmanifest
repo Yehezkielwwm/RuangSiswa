@@ -1,0 +1,45 @@
+{
+  "name": "RuangSiswa — Student Dashboard",
+  "short_name": "RuangSiswa",
+  "description": "Dashboard belajar untuk jadwal, tugas, catatan, dan ayat Alkitab harian.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f5f6f2",
+  "theme_color": "#426d54",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Kalender",
+      "short_name": "Kalender",
+      "url": "./index.html#calendar",
+      "icons": [
+        {
+          "src": "icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Daftar tugas",
+      "short_name": "Tugas",
+      "url": "./index.html#tasks",
+      "icons": [
+        {
+          "src": "icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}
