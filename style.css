@@ -71,3 +71,42 @@ input,select,textarea{max-width:100%}
 .calendar-agenda-item strong{font-size:13px;overflow-wrap:anywhere}
 .calendar-agenda-item span{font-size:11px;color:var(--muted,#7d887f);line-height:1.5}
 @media(max-width:760px){.calendar-layout{grid-template-columns:1fr}.calendar-panel,.calendar-agenda{padding:16px}.calendar-days{gap:3px}.calendar-day{min-height:54px;padding:8px 1px;font-size:13px}.calendar-toolbar{gap:8px}.calendar-toolbar h2{font-size:16px}}
+
+
+/* Extended school timetable, file cabinet and personal finance */
+.secondary-button{border:1px solid var(--line,#e4e8e2);background:#fff;border-radius:10px;padding:10px 14px;color:var(--green-dark);font-weight:700;cursor:pointer}
+.timetable-eyebrow{margin:26px 0 12px}
+.weekly-timetable{overflow-x:auto}
+.tt-grid{display:grid;grid-template-columns:145px repeat(5,minmax(125px,1fr));min-width:780px;border:1px solid #e4e8e2;border-radius:12px;overflow:hidden}
+.tt-cell{padding:12px 10px;border-right:1px solid #e8ebe6;border-bottom:1px solid #e8ebe6;min-height:62px;font-size:12px}
+.tt-head{background:#edf3ed;font-weight:800;text-align:center;color:#31543d}
+.tt-time{font-weight:700;color:#52665a;background:#fafbf9;display:flex;align-items:center}
+.tt-lesson strong,.tt-lesson small{display:block}.tt-lesson strong{font-size:12px;color:#263d2e}.tt-lesson small{color:#829087;margin-top:4px}
+.file-layout,.money-layout{display:grid;grid-template-columns:minmax(260px,.8fr) minmax(0,1.4fr);gap:20px;align-items:start}
+.file-upload-panel,.file-list-panel,.money-entry-panel,.savings-panel,.transaction-panel{padding:22px}
+.file-upload-panel h2,.file-list-panel h2,.money-entry-panel h2,.savings-panel h2,.transaction-panel h2{font-size:18px;margin:0 0 18px}
+.file-form,.money-form{display:grid;gap:14px}
+.inline-create{display:flex;gap:8px}.inline-create input{min-width:0;flex:1}
+.file-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.folder-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
+.folder-tab{border:1px solid #e4e8e2;background:#fff;padding:8px 12px;border-radius:999px;color:#65736a;cursor:pointer;font-size:12px}
+.folder-tab.active{background:var(--green);color:#fff;border-color:var(--green)}
+.stored-files,.transaction-list{display:grid;gap:9px}
+.stored-file,.transaction-row{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #edf0eb;border-radius:12px;min-width:0}
+.stored-file-icon{font-size:20px;background:#edf3ed;padding:9px;border-radius:10px}
+.stored-file-info,.transaction-copy{flex:1;min-width:0}.stored-file-info strong,.stored-file-info small,.transaction-copy strong,.transaction-copy small{display:block;overflow-wrap:anywhere}.stored-file-info small,.transaction-copy small{font-size:11px;color:#849087;margin-top:4px}
+.file-download{font-size:12px;color:var(--green);font-weight:700;text-decoration:none}
+.money-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.money-stat{background:#fff;border:1px solid #e9ede7;border-radius:16px;padding:20px;display:grid;gap:8px}
+.money-stat span{font-size:12px;color:#7b887f}.money-stat strong{font-size:clamp(18px,2vw,26px);color:#294b38;overflow-wrap:anywhere}
+.money-balance{background:#294b38}.money-balance span,.money-balance strong{color:#fff}
+.transaction-panel{margin-top:20px}
+.money-filter{display:flex;gap:10px;margin:12px 0;flex-wrap:wrap}.money-filter select{padding:9px;border:1px solid #e4e8e2;border-radius:9px;background:#fff}
+.category-breakdown{padding:14px 0}.category-breakdown h3{font-size:14px}.category-bars{display:grid;gap:10px}
+.category-row{display:grid;grid-template-columns:minmax(100px,1fr) minmax(80px,2fr) auto;gap:10px;align-items:center;font-size:11px}
+.category-row strong{font-size:11px}.category-track{height:9px;background:#edf1ec;border-radius:99px;overflow:hidden}.category-track i{display:block;height:100%;background:var(--green);border-radius:99px}
+.transaction-symbol{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800}.transaction-symbol.income{background:#e7f4e9;color:#32804a}.transaction-symbol.expense{background:#fff0e9;color:#bd6848}
+.transaction-amount{font-size:13px;white-space:nowrap}.transaction-amount.income{color:#32804a}.transaction-amount.expense{color:#bd6848}
+.savings-goals{display:grid;gap:12px;margin-top:18px}.saving-goal{border:1px solid #e9ede7;border-radius:12px;padding:14px}.saving-goal-head,.saving-numbers{display:flex;justify-content:space-between;align-items:center;gap:10px}.saving-numbers{font-size:11px;color:#7b887f;margin:12px 0}.saving-goal>small{display:block;color:#7b887f;margin-top:7px}
+.goal-add-form{display:flex;gap:8px;margin-top:12px}.goal-add-form input{min-width:0;flex:1;padding:9px;border:1px solid #e4e8e2;border-radius:9px}
+@media(max-width:850px){.file-layout,.money-layout{grid-template-columns:1fr}.money-summary-grid{grid-template-columns:1fr}.money-stat{padding:15px}.transaction-row{gap:8px}.transaction-amount{font-size:11px}}

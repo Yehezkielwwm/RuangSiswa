@@ -26,6 +26,8 @@
         <button class="nav-item active" data-view="overview"><span class="nav-icon">▦</span> Ringkasan</button>
         <button class="nav-item" data-view="calendar"><span class="nav-icon">▦</span> Kalender</button>
         <button class="nav-item" data-view="schedule"><span class="nav-icon">▤</span> Jadwal</button>
+        <button class="nav-item" data-view="files"><span class="nav-icon">▣</span> File tugas</button>
+        <button class="nav-item" data-view="money"><span class="nav-icon">Rp</span> Money management</button>
         <button class="nav-item" data-view="tasks"><span class="nav-icon">✓</span> Daftar tugas <span class="nav-count" id="taskNavCount">0</span></button>
         <button class="nav-item" data-view="reminders"><span class="nav-icon">◷</span> Pengingat</button>
       </nav>
@@ -149,7 +151,7 @@
         <div class="panel schedule-full-panel">
           <div class="week-tabs" id="weekTabs"></div>
           <div class="schedule-day-title"><div><span class="eyebrow">AGENDA HARIAN</span><h2 id="selectedDayTitle">Senin</h2></div><span class="day-total" id="dayTotal">0 kegiatan</span></div>
-          <div class="timeline full-timeline" id="fullTimeline"></div>
+          <div class="timeline full-timeline" id="fullTimeline"></div><div class="eyebrow timetable-eyebrow">TABEL JADWAL MINGGUAN</div><div id="weeklyTimetable" class="weekly-timetable"></div>
         </div>
       </section>
 
@@ -162,6 +164,52 @@
       <section class="page-view" id="remindersView">
         <div class="page-heading"><div><div class="eyebrow">JAGA HAL PENTING</div><h1>Pengingat</h1><p class="subheading">Hal kecil yang sering terlupa, sekarang punya tempat.</p></div><button class="primary-button" id="addReminderPage">＋ Buat pengingat</button></div>
         <div class="reminder-grid" id="reminderGrid"></div>
+      </section>
+
+
+      <section class="page-view" id="filesView">
+        <div class="page-heading"><div><div class="eyebrow">ARSIP SEKOLAH</div><h1>File tugas</h1><p class="subheading">Simpan dokumen, foto, dan bahan belajar dalam folder per mata pelajaran.</p></div></div>
+        <div class="file-layout">
+          <section class="panel file-upload-panel">
+            <h2>Tambah file</h2>
+            <form id="fileUploadForm" class="file-form">
+              <div class="form-field"><label for="fileFolder">Folder mata pelajaran</label><select id="fileFolder"></select></div>
+              <div class="form-field"><label for="fileCustomFolder">Atau buat folder sendiri</label><div class="inline-create"><input id="fileCustomFolder" maxlength="40" placeholder="Nama folder baru"><button type="button" class="secondary-button" id="createFolderBtn">Buat</button></div></div>
+              <div class="form-field"><label for="taskFiles">Pilih file</label><input id="taskFiles" type="file" multiple required></div>
+              <button class="primary-button" type="submit">＋ Simpan file</button>
+            </form>
+            <p class="muted-small">File disimpan di penyimpanan browser perangkat ini. Jangan hapus data situs jika ingin mempertahankannya.</p>
+          </section>
+          <section class="panel file-list-panel"><div class="file-toolbar"><h2>Folder & file</h2><span id="fileCount" class="muted-small"></span></div><div id="fileFolderTabs" class="folder-tabs"></div><div id="storedFiles" class="stored-files"></div></section>
+        </div>
+      </section>
+
+      <section class="page-view" id="moneyView">
+        <div class="page-heading"><div><div class="eyebrow">KEUANGAN PRIBADI</div><h1>Money management</h1><p class="subheading">Catat uang masuk, uang keluar, dan pantau target tabunganmu.</p></div></div>
+        <div class="money-summary-grid">
+          <article class="money-stat"><span>Total pemasukan</span><strong id="incomeTotal">Rp0</strong></article>
+          <article class="money-stat"><span>Total pengeluaran</span><strong id="expenseTotal">Rp0</strong></article>
+          <article class="money-stat money-balance"><span>Saldo bersih</span><strong id="balanceTotal">Rp0</strong></article>
+        </div>
+        <div class="money-layout">
+          <section class="panel money-entry-panel"><h2>Catat transaksi</h2>
+            <form id="transactionForm" class="money-form">
+              <div class="form-row"><div class="form-field"><label for="transactionType">Jenis</label><select id="transactionType"><option value="expense">Pengeluaran</option><option value="income">Pemasukan</option></select></div><div class="form-field"><label for="transactionAmount">Nominal (Rp)</label><input id="transactionAmount" type="number" min="1" step="1" required placeholder="Contoh: 15000"></div></div>
+              <div class="form-row"><div class="form-field"><label for="transactionCategory">Kategori</label><select id="transactionCategory"></select></div><div class="form-field"><label for="transactionDate">Tanggal</label><input id="transactionDate" type="date" required></div></div>
+              <div class="form-field"><label for="transactionNote">Keterangan</label><input id="transactionNote" maxlength="90" placeholder="Contoh: jajan di kantin"></div>
+              <button class="primary-button" type="submit">＋ Simpan transaksi</button>
+            </form>
+          </section>
+          <section class="panel savings-panel"><h2>Target tabungan</h2>
+            <form id="goalForm" class="money-form">
+              <div class="form-field"><label for="goalName">Nama target</label><input id="goalName" required maxlength="60" placeholder="Contoh: Beli laptop"></div>
+              <div class="form-row"><div class="form-field"><label for="goalTarget">Target (Rp)</label><input id="goalTarget" type="number" min="1" required placeholder="2000000"></div><div class="form-field"><label for="goalSaved">Sudah terkumpul (Rp)</label><input id="goalSaved" type="number" min="0" value="0"></div></div>
+              <button class="primary-button" type="submit">＋ Buat target</button>
+            </form>
+            <div id="savingsGoals" class="savings-goals"></div>
+          </section>
+        </div>
+        <section class="panel transaction-panel"><div class="file-toolbar"><h2>Riwayat transaksi</h2><span id="transactionCount" class="muted-small"></span></div><div class="money-filter"><select id="transactionFilter"><option value="all">Semua transaksi</option><option value="income">Pemasukan</option><option value="expense">Pengeluaran</option></select><select id="transactionMonth"><option value="all">Semua bulan</option></select></div><div id="categoryBreakdown" class="category-breakdown"></div><div id="transactionList" class="transaction-list"></div></section>
       </section>
 
       <section class="page-view" id="settingsView">
@@ -217,7 +265,7 @@
         <input type="hidden" id="entryType" value="task">
         <label for="entryTitle">Nama kegiatan / tugas</label><input id="entryTitle" required maxlength="90" placeholder="Contoh: Latihan soal matematika">
         <div class="form-row" id="taskFields"><div class="form-field"><label for="entrySubject">Mata pelajaran</label><select id="entrySubject"><option>Matematika</option><option>Fisika</option><option>Kimia</option><option>Biologi</option><option>Bahasa Indonesia</option><option>Bahasa Inggris</option><option>Sejarah</option><option>Informatika</option><option>Lainnya</option></select></div><div class="form-field"><label for="entryDue">Batas waktu</label><input type="date" id="entryDue"></div></div>
-        <div id="scheduleFields" hidden><div class="form-row"><div class="form-field"><label for="entryDay">Hari</label><select id="entryDay"><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option></select></div></div><div class="form-row"><div class="form-field"><label for="entryTime">Mulai pukul</label><input type="time" id="entryTime" value="07:00" required></div><div class="form-field"><label for="entryEndTime">Selesai pukul</label><input type="time" id="entryEndTime" value="07:45" required></div></div></div>
+        <div id="scheduleFields" hidden><div class="form-row"><div class="form-field"><label for="entryDay">Hari</label><select id="entryDay"><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option></select></div><div class="form-field"><label for="entryPeriod">Jam ke / sesi (opsional)</label><input id="entryPeriod" type="text" maxlength="12" placeholder="Contoh: 1"></div></div><div class="form-row"><div class="form-field"><label for="entrySubjectSchedule">Mata pelajaran / kegiatan</label><input id="entrySubjectSchedule" maxlength="40" placeholder="Contoh: Matematika"></div></div><div class="form-row"><div class="form-field"><label for="entryTime">Mulai pukul</label><input type="time" id="entryTime" value="07:00" required></div><div class="form-field"><label for="entryEndTime">Selesai pukul</label><input type="time" id="entryEndTime" value="07:45" required></div></div></div>
         <div class="form-row" id="reminderFields" hidden><div class="form-field"><label for="entryReminderDate">Tanggal</label><input type="date" id="entryReminderDate"></div><div class="form-field"><label for="entryReminderTime">Waktu (opsional)</label><input type="time" id="entryReminderTime"></div></div>
         <div class="form-field"><label for="entryDescription">Catatan (opsional)</label><textarea id="entryDescription" class="small-textarea" rows="2" placeholder="Detail tambahan..."></textarea></div>
         <div class="modal-actions"><button type="button" class="cancel-button" id="cancelModal">Batal</button><button type="submit" class="primary-button">Simpan</button></div>
