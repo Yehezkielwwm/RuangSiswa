@@ -309,3 +309,17 @@ $('savingsGoals')?.addEventListener('click',e=>{const del=e.target.closest('[dat
 $('savingsGoals')?.addEventListener('submit',e=>{const form=e.target.closest('[data-goal-add]');if(!form)return;e.preventDefault();const g=savings.find(x=>x.id===Number(form.dataset.goalAdd)),amount=Number(new FormData(form).values().next().value);if(g&&amount>0){g.saved+=amount;localStorage.setItem('ruangsiswa_savings',JSON.stringify(savings));renderMoney();toast('Tabungan berhasil ditambahkan.')}});
 
 renderMoney();renderFiles();
+
+
+// Small interaction refinements: keyboard support and subtle press feedback.
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    const backdrop=$('modalBackdrop');
+    if(backdrop?.classList.contains('open'))$('closeModal')?.click();
+    $('sidebar')?.classList.remove('open');
+  }
+});
+document.addEventListener('click',e=>{
+  const nav=e.target.closest('.nav-item[data-view]');
+  if(nav && window.matchMedia('(max-width: 850px)').matches)$('sidebar')?.classList.remove('open');
+});
